@@ -36,14 +36,17 @@ const Analyze = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      setAnalysisResult(response.data);
+      setAnalysisResult(response?.data);
       // Keep loader for a moment to show 100%
       setTimeout(() => setIsLoading(false), 500);
       toast.success("Resume analyzed successfully!");
     } catch (error) {
       console.error("Error analyzing resume:", error);
       setIsLoading(false);
-      toast.error("Failed to analyze resume. Please try again.");
+      toast.error(
+        error.response?.data?.message ||
+          "Failed to analyze resume. Please try again."
+      );
     }
   };
 

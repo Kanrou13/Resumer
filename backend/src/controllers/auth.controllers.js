@@ -31,7 +31,7 @@ export const handleRegister = asyncHandler(async (req, res) => {
   if (!req.body) {
     throw new ApiError(400, "Request body is missing");
   }
-  const { fullName, email, password } = req.body;
+  const { fullName, email, password } = req.body || {};
 
   if (
     [fullName, email, password].some((field) => !field || field.trim() === "")
@@ -75,12 +75,12 @@ export const handleRegister = asyncHandler(async (req, res) => {
   const Accessoptions = {
     httpOnly: true,
     secure: ENV.NODE_ENV === "production",
-    maxAge: 1 * 24 * 60 * 60 * 1000, // 7 days
+    maxAge: 60 * 60 * 60 * 1000, // 1 hour
   };
   const Refreshoptions = {
     httpOnly: true,
     secure: ENV.NODE_ENV === "production",
-    maxAge: 10 * 24 * 60 * 60 * 1000, // 7 days
+    maxAge: 10 * 24 * 60 * 60 * 1000, // 10 days
   };
   return res
     .status(201)
@@ -99,7 +99,7 @@ export const handleLogin = asyncHandler(async (req, res) => {
   //send cookie
   //return the res.user
 
-  const { email, password } = req.body;
+  const { email, password } = req.body || {};
 
   if (!email || !password) {
     throw new ApiError(400, "email or password is required");
@@ -115,20 +115,20 @@ export const handleLogin = asyncHandler(async (req, res) => {
   }
 
   const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
-    user._id
+    user?._id
   );
 
-  const loggedInUser = await User.findById(user._id).select("-password");
+  const loggedInUser = await User.findById(user?._id).select("-password");
 
   const Accessoptions = {
     httpOnly: true,
     secure: ENV.NODE_ENV === "production",
-    maxAge: 1 * 24 * 60 * 60 * 1000, // 7 days
+    maxAge: 60 * 60 * 60 * 1000, // 1 hour
   };
   const Refreshoptions = {
     httpOnly: true,
     secure: ENV.NODE_ENV === "production",
-    maxAge: 10 * 24 * 60 * 60 * 1000, // 7 days
+    maxAge: 10 * 24 * 60 * 60 * 1000, // 10 days
   };
   return res
     .status(200)
@@ -155,12 +155,12 @@ export const handleLogout = asyncHandler(async (req, res) => {
   const Accessoptions = {
     httpOnly: true,
     secure: ENV.NODE_ENV === "production",
-    maxAge: 1 * 24 * 60 * 60 * 1000, // 7 days
+    maxAge: 60 * 60 * 60 * 1000, // 1 hour
   };
   const Refreshoptions = {
     httpOnly: true,
     secure: ENV.NODE_ENV === "production",
-    maxAge: 10 * 24 * 60 * 60 * 1000, // 7 days
+    maxAge: 10 * 24 * 60 * 60 * 1000, // 10 days
   };
   return res
     .status(200)
@@ -170,7 +170,7 @@ export const handleLogout = asyncHandler(async (req, res) => {
 });
 
 export const handleUpdatePassword = asyncHandler(async (req, res) => {
-  const { oldPassword, newPassword } = req.body;
+  const { oldPassword, newPassword } = req.body || {};
 
   if (!oldPassword || !newPassword) {
     throw new ApiError(400, "Old and new password are required");
@@ -194,4 +194,85 @@ export const handleUpdatePassword = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponse(200, {}, "Password updated successfully"));
+});
+
+export const refreshAccessToken = asyncHandler(async (req, res) => {
+  //access the refreshtoken cookies
+  //if not get throw err
+  const incomingRefreshToken = req.cookies?.refreshToken;
+
+  if (!incomingRefreshToken) {
+    throw new ApiError(401, "User not Authorised");
+  }
+
+  try {
+    const decoded = jwt.verify(incomingRefreshToken, ENV.REFRESH_TOKEN_SECRET);
+    const user = await User.findById(decoded?._id);
+
+    if (!user) {
+      throw new ApiError(401, "User not found || Wrong refresh token");
+    }
+
+    if (user.refreshToken !== incomingRefreshToken) {
+      throw new ApiError(
+        401,
+        "User not Authorised || refresh token didnt match"
+      );
+    }
+
+    const { accessToken, refreshToken: newRefreshToken } =
+      await generateAccessAndRefreshTokens(user?._id);
+
+    const Accessoptions = {
+      httpOnly: true,
+      secure: ENV.NODE_ENV === "production",
+      maxAge: 60 * 60 * 60 * 1000, // 1 hour
+    };
+    const Refreshoptions = {
+      httpOnly: true,
+      secure: ENV.NODE_ENV === "production",
+      maxAge: 10 * 24 * 60 * 60 * 1000, // 10 days
+    };
+    return res
+      .status(201)
+      .cookie("accessToken", accessToken, Accessoptions)
+      .cookie("refreshToken", newRefreshToken, Refreshoptions)
+      .json(
+        new ApiResponse(
+          201,
+          { accessToken, refreshToken: newRefreshToken },
+          "AccessToken genrated successfully"
+        )
+      );
+  } catch (error) {
+    ApiError(500, "Internal server error");
+  }
+});
+
+export const handleGoogleCallback = asyncHandler(async (req, res) => {
+  // Passport attaches the authenticated user to req.user
+  const user = req.user;
+
+  // Generate YOUR tokens
+  const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
+    user._id
+  );
+
+  const Accessoptions = {
+    httpOnly: true,
+    secure: ENV.NODE_ENV === "production",
+    maxAge: 60 * 60 * 60 * 1000, // 1 hour
+  };
+  const Refreshoptions = {
+    httpOnly: true,
+    secure: ENV.NODE_ENV === "production",
+    maxAge: 10 * 24 * 60 * 60 * 1000, // 10 days
+  };
+
+  // Redirect user back to Frontend Dashboard with cookies set
+  res
+    .status(200)
+    .cookie("accessToken", accessToken, Accessoptions)
+    .cookie("refreshToken", refreshToken, Refreshoptions)
+    .redirect("http://localhost:5173/analyze");
 });

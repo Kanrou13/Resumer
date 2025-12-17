@@ -31,18 +31,22 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={authUser ? <Navigate to="/analyze" /> : <LandingPage />}
+          element={
+            authUser ? <Navigate to="/analyze" replace /> : <LandingPage />
+          }
         />
         <Route
           path="/login"
-          element={!authUser ? <Login /> : <Navigate to="/analyze" />}
+          element={!authUser ? <Login /> : <Navigate to="/analyze" replace />}
         />
         <Route
           path="/signup"
-          element={!authUser ? <Signup /> : <Navigate to="/analyze" />}
+          element={!authUser ? <Signup /> : <Navigate to="/analyze" replace />}
         />
         <Route
-          element={authUser ? <DashboardLayout /> : <Navigate to="/login" />}
+          element={
+            authUser ? <DashboardLayout /> : <Navigate to="/login" replace />
+          }
         >
           <Route path="/analyze" element={<Analyze />} />
           <Route path="/optimize" element={<Optimize />} />

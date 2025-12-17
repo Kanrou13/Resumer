@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/card";
 import { AuthLoader } from "@/components/ui/auth-loader";
 import { useAuthStore } from "../store/Auth.store";
+import GoogleLoginButton from "@/components/ui/GoogleLoginButton";
+import GithubLoginButton from "@/components/ui/GithubLoginButton";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -100,6 +102,10 @@ const Signup = () => {
                 {isSigningUp ? <AuthLoader /> : "Sign Up"}
               </Button>
             </form>
+            <div className="mt-5 space-y-3">
+              <GoogleLoginButton />
+              <GithubLoginButton />
+            </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-2">
             <div className="text-sm text-center text-neutral-400">

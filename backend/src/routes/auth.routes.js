@@ -4,8 +4,11 @@ import {
   handleLogin,
   handleLogout,
   handleUpdatePassword,
+  refreshAccessToken,
+  handleGoogleCallback,
 } from "../controllers/auth.controllers.js";
 import verifyJWT from "../middlewares/auth.middleware.js";
+import passport from "passport";
 
 const authRouter = Router();
 
@@ -18,4 +21,39 @@ authRouter.get("/check", verifyJWT, (req, res) => {
     .status(200)
     .json({ success: true, message: "Token is valid", user: req.user });
 });
+authRouter.post("/refresh-token", refreshAccessToken);
+
+// 1. The Route your Button hits (Triggers Google Login Screen)
+authRouter.get(
+  "/google",
+  passport.authenticate("google", {
+    session: false, // We use JWT, not session
+    scope: ["profile", "email"],
+  })
+);
+
+// 2. The Route Google hits after login (The Callback)
+authRouter.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    session: false,
+    failureRedirect: "http://localhost:5173/login?error=google_failed",
+  }),
+  handleGoogleCallback
+);
+
+authRouter.get(
+  "/github",
+  passport.authenticate("github", { scope: ["user:email"] })
+);
+
+authRouter.get(
+  "/github/callback",
+  passport.authenticate("github", {
+    failureRedirect: "/login?error=github_failed",
+    session: false,
+  }),
+  handleGoogleCallback // Reusing the same logic!
+);
+
 export default authRouter;
