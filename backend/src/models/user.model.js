@@ -22,6 +22,10 @@ const UserSchema = new Mongoose.Schema(
       required: true,
       trim: true,
     },
+    avatar: {
+      type: String, // Google Profile Picture
+      default: "",
+    },
     refreshToken: {
       type: String,
       default: null,

@@ -58,7 +58,7 @@ export const handleAnalyzeResume = asyncHandler(async (req, res) => {
   try {
     // Parallel Execution: Start Gemini API call AND Cloud Upload simultaneously
     const geminiPromise = model.generateContent(prompt);
-    const cloudinaryPromise = cloudinaryUpload(req.file.buffer);
+    const cloudinaryPromise = cloudinaryUpload(req.file?.buffer);
 
     // Await Results: Wait for both to finish
     const [geminiResult, cloudinaryUrl] = await Promise.all([
@@ -68,17 +68,12 @@ export const handleAnalyzeResume = asyncHandler(async (req, res) => {
 
     // Handle Gemini response
     let responseText = "";
-    if (
-      geminiResult.response &&
-      typeof geminiResult.response.text === "function"
-    ) {
+    if (typeof geminiResult?.response?.text === "function") {
       responseText = geminiResult.response.text();
-    } else if (typeof geminiResult.text === "function") {
+    } else if (typeof geminiResult?.text === "function") {
       responseText = geminiResult.text();
     } else if (
-      geminiResult.response &&
-      geminiResult.response.candidates &&
-      geminiResult.response.candidates.length > 0
+      geminiResult?.response?.candidates?.[0]?.content?.parts?.[0]?.text
     ) {
       responseText = geminiResult.response.candidates[0].content.parts[0].text;
     } else {
@@ -95,9 +90,9 @@ export const handleAnalyzeResume = asyncHandler(async (req, res) => {
 
     // Save to DB: Create a history record
     const resumeScan = await ResumeScan.create({
-      originalName: req.file.originalname,
+      originalName: req.file?.originalname,
       pdfUrl: cloudinaryUrl,
-      owner: req.user._id,
+      owner: req.user?._id,
       atsScore: analysisData.score,
       analysisResult: analysisData,
     });
