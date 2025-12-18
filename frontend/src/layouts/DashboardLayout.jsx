@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import { FloatingDock } from "@/components/ui/floating-dock";
 import Header from "../components/Header";
+import BottomNav from "../components/BottomNav";
 import { FileText, Zap, PenTool, Users, User } from "lucide-react";
 
 const DashboardLayout = () => {
@@ -49,10 +50,17 @@ const DashboardLayout = () => {
       <main>
         <Outlet />
       </main>
-      <div className="fixed bottom-8 left-0 right-0 flex justify-center z-50 pointer-events-none">
+
+      {/* Desktop Navigation */}
+      <div className="hidden md:flex fixed bottom-8 left-0 right-0 justify-center z-50 pointer-events-none">
         <div className="pointer-events-auto">
           <FloatingDock items={navItems} />
         </div>
+      </div>
+
+      {/* Mobile Navigation */}
+      <div className="md:hidden">
+        <BottomNav />
       </div>
     </div>
   );
