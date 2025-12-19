@@ -24,4 +24,5 @@ app.use(passport.initialize());
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/resume", resumeRouter);
 
+
 export default app;
