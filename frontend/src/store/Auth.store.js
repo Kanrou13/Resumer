@@ -8,6 +8,7 @@ export const useAuthStore = create((set, get) => ({
   isLoggingIn: false,
   isLoggingOut: false,
   isCheckingAuth: true,
+  isUpdatingPassword: false,
 
   checkAuth: async () => {
     try {
@@ -67,6 +68,31 @@ export const useAuthStore = create((set, get) => ({
       toast.error(error.response?.data?.message || "Logout failed");
     } finally {
       set({ isLoggingOut: false });
+    }
+  },
+
+  updatePassword: async (oldPassword, newPassword) => {
+    set({ isUpdatingPassword: true });
+    try {
+      const user = get({ authUser });
+      if (!user) {
+        toast.error("Failed to get the user");
+      }
+      const res = await axiosInstance.put(`auth/updatepassword`, {
+        oldPassword,
+        newPassword,
+      });
+      if (!res) {
+        toast.error("Backend not responding");
+      }
+      user.password = res.data.newPassword;
+      set({ authUser: user });
+    } catch {
+      toast.error(
+        error.response?.data?.message || "Failed to change the password"
+      );
+    } finally {
+      set({ isUpdatingPassword: false });
     }
   },
 }));
