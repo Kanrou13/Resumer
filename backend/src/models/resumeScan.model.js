@@ -23,6 +23,9 @@ const ResumeScanSchema = new Mongoose.Schema(
       type: Number, // e.g., 85
       required: true,
     },
+    resumeText: {
+      type: String, // Extracted text from PDF
+    },
     // We store the full AI JSON response here
     analysisResult: {
       type: Object, // This allows flexibility for the JSON structure
