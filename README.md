@@ -132,3 +132,4 @@ Create `frontend/.env` with:
 - Add rate limiting and better retry for Gemini calls.
 - Add richer history UI (filters, pagination) and export options.
 - Manage History Properly in UI.
+- also use inbuilt cloudinary tumbnail creter to create thumbnail for history
