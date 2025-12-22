@@ -1,19 +1,31 @@
 import Router from "express";
-import verifyJWT from "../middlewares/auth.middleware";
+import verifyJWT from "../middlewares/auth.middleware.js";
 import {
-  handleGeneralOptimization,
-  handleJdOptimization,
-} from "../controllers/optimize.controllers";
-import upload from "../middlewares/memory.middleware";
+  optimizeResume,
+  optimizeJd,
+  saveResumeScan,
+  uploadToCloudinaryMiddleware,
+} from "../controllers/optimize.controllers.js";
+import upload from "../middlewares/memory.middleware.js";
 
 const optimizeRouter = Router();
 
 optimizeRouter.post(
-  "/general",
+  "/optimize/general",
   verifyJWT,
-  upload.single(),
-  handleGeneralOptimization
+  upload.single("resume"),
+  uploadToCloudinaryMiddleware,
+  optimizeResume,
+  saveResumeScan
 );
-optimizeRouter.post("/jd", verifyJWT, upload.single(), handleJdOptimization);
+
+optimizeRouter.post(
+  "/optimize/jd",
+  verifyJWT,
+  upload.single("resume"),
+  uploadToCloudinaryMiddleware,
+  optimizeJd,
+  saveResumeScan
+);
 
 export default optimizeRouter;
