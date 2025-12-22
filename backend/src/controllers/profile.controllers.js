@@ -5,7 +5,12 @@ import ResumeScan from "../models/resumeScan.model.js";
 import User from "../models/user.model.js";
 
 export const ResumeScanHistory = asyncHandler(async (req, res) => {
-  const history = await ResumeScan.find({ owner: req?.user._id }).sort({
+  // Filter to only show Analysis scans (exclude Optimizations)
+  // We check for 'key_skills' which exists in Analysis but not Optimization
+  const history = await ResumeScan.find({
+    owner: req?.user._id,
+    "analysisResult.key_skills": { $exists: true },
+  }).sort({
     createdAt: -1,
   });
   if (!history) {

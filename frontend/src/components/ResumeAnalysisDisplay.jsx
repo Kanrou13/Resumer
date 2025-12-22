@@ -38,7 +38,7 @@ const ResumeAnalysisDisplay = memo(({ data }) => {
             </CardTitle>
           </CardHeader>
           <CardContent className="flex flex-wrap gap-2">
-            {data.key_skills.map((skill, index) => (
+            {data.key_skills?.map((skill, index) => (
               <Badge
                 key={index}
                 variant="secondary"
@@ -58,7 +58,7 @@ const ResumeAnalysisDisplay = memo(({ data }) => {
             </CardTitle>
           </CardHeader>
           <CardContent className="flex flex-wrap gap-2">
-            {data.missing_keywords.map((keyword, index) => (
+            {data.missing_keywords?.map((keyword, index) => (
               <Badge
                 key={index}
                 variant="outline"
@@ -80,13 +80,13 @@ const ResumeAnalysisDisplay = memo(({ data }) => {
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Formatting Issues */}
-          {data.formatting_issues.length > 0 && (
+          {data.formatting_issues?.length > 0 && (
             <div className="bg-red-50 p-4 rounded-lg border border-red-100 dark:bg-red-900/20 dark:border-red-900/50">
               <h4 className="font-semibold text-red-800 mb-2 dark:text-red-300">
                 Formatting Errors:
               </h4>
               <ul className="list-disc list-inside space-y-1 text-sm text-red-700 dark:text-red-400">
-                {data.formatting_issues.map((issue, i) => (
+                {data.formatting_issues?.map((issue, i) => (
                   <li key={i}>{issue}</li>
                 ))}
               </ul>
@@ -96,7 +96,7 @@ const ResumeAnalysisDisplay = memo(({ data }) => {
           {/* Improvement Tips */}
           <div className="space-y-3">
             <h4 className="font-semibold text-foreground">Steps to Improve:</h4>
-            {data.actionable_feedback.map((tip, i) => (
+            {data.actionable_feedback?.map((tip, i) => (
               <div
                 key={i}
                 className="flex gap-3 items-start p-3 bg-gray-50 rounded-md dark:bg-muted/50"

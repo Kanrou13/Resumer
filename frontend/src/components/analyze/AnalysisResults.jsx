@@ -39,7 +39,9 @@ const AnalysisResults = memo(({ analysisResult, lastScan }) => {
           </div>
         }
       >
-        <ResumeAnalysisDisplay data={analysisResult.data} />
+        <ResumeAnalysisDisplay
+          data={analysisResult.data?.analysis || analysisResult.data}
+        />
       </Suspense>
 
       {/* Optimization Actions */}

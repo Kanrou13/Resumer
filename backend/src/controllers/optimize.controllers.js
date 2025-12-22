@@ -10,7 +10,7 @@ import cloudinaryUpload from "../lib/cloudinary.js";
 
 //Setup Google Gemini AI
 const ai = new GoogleGenerativeAI(ENV.GEMINI_API_KEY);
-const model = ai.getGenerativeModel({ model: "gemini-2.0-flash" });
+const model = ai.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 export const uploadToCloudinaryMiddleware = asyncHandler(
   async (req, res, next) => {
@@ -298,6 +298,7 @@ export const saveResumeScan = asyncHandler(async (req, res) => {
     atsScore: aiResult.ats_score_after || 0,
     analysisResult: aiResult, // Storing the full AI result here
     resumeText: req.resumeText || "",
+    type: "optimization",
   });
 
   return res

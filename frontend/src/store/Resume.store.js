@@ -54,7 +54,7 @@ clear the previous results when the user clicks a "Start Over" or "Upload New" b
     set({ isOptimizing: true });
     try {
       const response = await axiosInstance.post("/resume/optimize/general");
-      set({ optimizationResult: response.data });
+      set({ optimizationResult: response.data?.data?.analysisResult });
       toast.success("Resume optimized successfully!");
     } catch (error) {
       console.error("Error optimizing resume:", error);
@@ -76,7 +76,7 @@ clear the previous results when the user clicks a "Start Over" or "Upload New" b
       const response = await axiosInstance.post("/resume/optimize/jd", {
         jobDescription,
       });
-      set({ optimizationResult: response.data });
+      set({ optimizationResult: response.data?.data?.analysisResult });
       toast.success("Resume optimized for JD successfully!");
     } catch (error) {
       console.error("Error optimizing resume for JD:", error);
