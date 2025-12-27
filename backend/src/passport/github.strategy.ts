@@ -1,6 +1,6 @@
 import passport from "passport";
 import { Strategy as GitHubStrategy } from "passport-github2";
-import User from "../models/user.model";
+import User from "../models/user.model.ts";
 import { v4 as uuidv4 } from "uuid";
 
 passport.use(

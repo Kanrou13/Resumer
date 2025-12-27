@@ -1,8 +1,8 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import User from "../models/user.model";
+import User from "../models/user.model.ts";
 import { v4 as uuidv4 } from "uuid"; // Generates a random secure password
-import ENV from "../env";
+import ENV from "../env.ts";
 passport.use(
   new GoogleStrategy(
     {

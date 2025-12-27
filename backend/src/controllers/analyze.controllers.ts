@@ -1,12 +1,12 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import ENV from "../env";
+import ENV from "../env.ts";
 import pdf from "pdf-parse/lib/pdf-parse";
-import asyncHandler from "../utils/asyncHandler";
-import cloudinaryUpload from "../lib/cloudinary";
-import ApiError from "../utils/ApiError";
-import ApiResponse from "../utils/ApiResponse";
-import User from "../models/user.model";
-import ResumeScan from "../models/resumeScan.model";
+import asyncHandler from "../utils/asyncHandler.ts";
+import cloudinaryUpload from "../lib/cloudinary.ts";
+import ApiError from "../utils/ApiError.ts";
+import ApiResponse from "../utils/ApiResponse.ts";
+import User from "../models/user.model.ts";
+import ResumeScan from "../models/resumeScan.model.ts";
 
 //Setup Google Gemini AI
 const ai = new GoogleGenerativeAI(ENV.GEMINI_API_KEY);

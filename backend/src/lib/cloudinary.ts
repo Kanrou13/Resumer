@@ -1,5 +1,5 @@
 import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
-import ENV from "../env";
+import ENV from "../env.ts";
 import streamifier from "streamifier";
 
 const cloudinaryUpload = async (fileBuffer: Buffer): Promise<UploadApiResponse> => {

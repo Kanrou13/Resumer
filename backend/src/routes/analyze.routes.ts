@@ -1,7 +1,7 @@
 import Router from "express";
-import { handleAnalyzeResume } from "../controllers/analyze.controllers";
-import upload from "../middlewares/memory.middleware";
-import verifyJWT from "../middlewares/auth.middleware";
+import { handleAnalyzeResume } from "../controllers/analyze.controllers.ts";
+import upload from "../middlewares/memory.middleware.ts";
+import verifyJWT from "../middlewares/auth.middleware.ts";
 
 const analyzeRouter = Router();
 

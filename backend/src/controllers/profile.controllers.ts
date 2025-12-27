@@ -1,8 +1,8 @@
-import asyncHandler from "../utils/asyncHandler";
-import ApiError from "../utils/ApiError";
-import ApiResponse from "../utils/ApiResponse";
-import ResumeScan from "../models/resumeScan.model";
-import User from "../models/user.model";
+import asyncHandler from "../utils/asyncHandler.ts";
+import ApiError from "../utils/ApiError.ts";
+import ApiResponse from "../utils/ApiResponse.ts";
+import ResumeScan from "../models/resumeScan.model.ts";
+import User from "../models/user.model.ts";
 
 export const ResumeScanHistory = asyncHandler(async (req, res) => {
   // Filter to only show Analysis scans (exclude Optimizations)

@@ -1,11 +1,11 @@
-import asyncHandler from "../utils/asyncHandler";
+import asyncHandler from "../utils/asyncHandler.ts";
 
-import User from "../models/user.model";
-import ApiError from "../utils/ApiError";
-import ApiResponse from "../utils/ApiResponse";
+import User from "../models/user.model.ts";
+import ApiError from "../utils/ApiError.ts";
+import ApiResponse from "../utils/ApiResponse.ts";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import ENV from "../env";
+import ENV from "../env.ts";
 
 // Utility function to generate tokens
 

@@ -1,7 +1,7 @@
 import Mongoose, { Document, Model } from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import ENV from "../env";
+import ENV from "../env.ts";
 
 // Define the user interface
 export interface IUser extends Document {

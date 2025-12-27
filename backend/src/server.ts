@@ -1,6 +1,6 @@
-import ENV from "./env";
-import { connectDB } from "./lib/db";
-import app from "./app";
+import ENV from "./env.ts";
+import { connectDB } from "./lib/db.ts";
+import app from "./app.ts";
 
 const port = ENV.PORT || 3000;
 

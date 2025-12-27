@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import asyncHandler from "../utils/asyncHandler";
-import ApiError from "../utils/ApiError";
-import ApiResponse from "../utils/ApiResponse";
-import ResumeBuild from "../models/resumeBuild.model";
+import asyncHandler from "../utils/asyncHandler.ts";
+import ApiError from "../utils/ApiError.ts";
+import ApiResponse from "../utils/ApiResponse.ts";
+import ResumeBuild from "../models/resumeBuild.model.ts";
 
 // 1. CREATE NEW DRAFT (Blank or with Initial Data)
 export const storeBuiltResume = asyncHandler(async (req, res) => {

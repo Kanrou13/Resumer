@@ -8,7 +8,7 @@ import {
   handleGoogleCallback,
   updateProfile,
 } from "../controllers/auth.controllers";
-import verifyJWT from "../middlewares/auth.middleware";
+import verifyJWT from "../middlewares/auth.middleware.ts";
 import passport from "passport";
 
 const authRouter = Router();
