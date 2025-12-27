@@ -3,14 +3,14 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import compression from "compression"; // Import compression
 import passport from "passport"; // Import passport
-import authRouter from "./routes/auth.routes";
-import analyzeRouter from "./routes/analyze.routes";
-import profileRouter from "./routes/profile.routes";
+import authRouter from "./routes/auth.routes.ts";
+import analyzeRouter from "./routes/analyze.routes.ts";
+import profileRouter from "./routes/profile.routes.ts";
 import ENV from "./env";
-import "./passport/google.strategy"; // Execute the config file
-import "./passport/github.strategy"; // Execute the config file
-import optimizeRouter from "./routes/optimize.routes";
-import buildRouter from "./routes/build.routes";
+import "./passport/google.strategy.ts"; // Execute the config file
+import "./passport/github.strategy.ts"; // Execute the config file
+import optimizeRouter from "./routes/optimize.routes.ts";
+import buildRouter from "./routes/build.routes.ts";
 
 const app = express();
 
