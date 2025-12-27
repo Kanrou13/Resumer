@@ -6,7 +6,7 @@ import passport from "passport"; // Import passport
 import authRouter from "./routes/auth.routes.ts";
 import analyzeRouter from "./routes/analyze.routes.ts";
 import profileRouter from "./routes/profile.routes.ts";
-import ENV from "./env";
+import ENV from "./env.ts";
 import "./passport/google.strategy.ts"; // Execute the config file
 import "./passport/github.strategy.ts"; // Execute the config file
 import optimizeRouter from "./routes/optimize.routes.ts";
