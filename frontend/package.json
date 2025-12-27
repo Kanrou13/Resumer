@@ -25,6 +25,7 @@
     "lucide-react": "^0.561.0",
     "mini-svg-data-uri": "^1.4.4",
     "motion": "^12.23.26",
+    "pdfjs-dist": "^5.4.449",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hot-toast": "^2.6.0",

@@ -1,11 +1,11 @@
-import { v2 as cloudinary } from "cloudinary";
+import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
 import ENV from "../env";
 import streamifier from "streamifier";
 
-const cloudinaryUpload = async (fileBuffer) => {
+const cloudinaryUpload = async (fileBuffer: Buffer): Promise<UploadApiResponse> => {
   try {
     // We wrap the stream logic in a Promise so we can 'await' it
-    const uploadResult = await new Promise((resolve, reject) => {
+    const uploadResult = await new Promise<UploadApiResponse>((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
           folder: "Resumer",
@@ -16,7 +16,7 @@ const cloudinaryUpload = async (fileBuffer) => {
           if (error) {
             reject(error);
           } else {
-            resolve(result);
+            resolve(result as UploadApiResponse);
           }
         }
       );

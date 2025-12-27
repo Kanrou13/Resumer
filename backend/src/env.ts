@@ -1,6 +1,25 @@
 import dotenv from "dotenv";
 dotenv.config();
-const ENV = {
+
+interface EnvConfig {
+  PORT: string;
+  MONGODB_URI: string;
+  NODE_ENV: string;
+  CORS_ORIGIN: string;
+  CLOUDINARY_CLOUD_NAME: string;
+  CLOUDINARY_API_KEY: string;
+  CLOUDINARY_API_SECRET: string;
+  GEMINI_API_KEY: string;
+  ACCESS_TOKEN_SECRET: string;
+  ACCESS_TOKEN_EXPIRY: string;
+  REFRESH_TOKEN_SECRET: string;
+  REFRESH_TOKEN_EXPIRY: string;
+  GOOGLE_CLIENT_ID: string;
+  GOOGLE_CLIENT_SECRET: string;
+  GOOGLE_CALLBACK_URL: string;
+}
+
+const ENV: EnvConfig = {
   PORT: `${process.env.PORT}`,
   MONGODB_URI: `${process.env.MONGODB_URI}`,
   NODE_ENV: `${process.env.NODE_ENV}`,

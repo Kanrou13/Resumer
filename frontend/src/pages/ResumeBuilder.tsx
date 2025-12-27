@@ -26,7 +26,7 @@ import { Toaster } from "react-hot-toast";
 // Lazy load builder components
 const ResumeForm = lazy(() => import("../components/builder/ResumeForm"));
 const ResumePreview = lazy(() => import("../components/builder/ResumePreview"));
-const PdfUploader = lazy(() => import("../components/builder/PDFUploader"));
+const PdfUploader = lazy(() => import("../components/builder/PdfUploader"));
 
 const ResumeBuilder = () => {
   const { id } = useParams();

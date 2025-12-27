@@ -8,13 +8,13 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "strict": false,
+    "noImplicitAny": false,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

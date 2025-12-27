@@ -1,9 +1,25 @@
-import Mongoose from "mongoose";
+import Mongoose, { Document, Model } from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import ENV from "../env";
 
-const UserSchema = new Mongoose.Schema(
+// Define the user interface
+export interface IUser extends Document {
+  _id: Mongoose.Types.ObjectId;
+  fullName: string;
+  email: string;
+  password: string;
+  avatar: string;
+  refreshToken: string | null;
+  resumeHistory: Mongoose.Types.ObjectId[];
+  createdAt: Date;
+  updatedAt: Date;
+  isPasswordCorrect(password: string): Promise<boolean>;
+  generateAccessToken(): Promise<string>;
+  generateRefreshToken(): Promise<string>;
+}
+
+const UserSchema = new Mongoose.Schema<IUser>(
   {
     fullName: {
       type: String,
@@ -45,11 +61,11 @@ UserSchema.pre("save", async function () {
   this.password = await bcrypt.hash(this.password, 10);
 });
 
-UserSchema.methods.isPasswordCorrect = async function (password) {
+UserSchema.methods.isPasswordCorrect = async function (password: string): Promise<boolean> {
   return await bcrypt.compare(password, this.password);
 };
 
-UserSchema.methods.generateAccessToken = async function () {
+UserSchema.methods.generateAccessToken = async function (): Promise<string> {
   return await jwt.sign(
     {
       _id: this._id,
@@ -63,7 +79,7 @@ UserSchema.methods.generateAccessToken = async function () {
   );
 };
 
-UserSchema.methods.generateRefreshToken = async function () {
+UserSchema.methods.generateRefreshToken = async function (): Promise<string> {
   return await jwt.sign(
     {
       _id: this._id,
@@ -75,5 +91,5 @@ UserSchema.methods.generateRefreshToken = async function () {
   );
 };
 
-const User = Mongoose.model("User", UserSchema);
+const User = Mongoose.model<IUser>("User", UserSchema);
 export default User;

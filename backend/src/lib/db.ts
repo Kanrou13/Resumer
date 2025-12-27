@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import ENV from "../env";
 
-export const connectDB = async () => {
+export const connectDB = async (): Promise<void> => {
   try {
     const MongoDB_Instance = await mongoose.connect(ENV.MONGODB_URI);
     console.log(
