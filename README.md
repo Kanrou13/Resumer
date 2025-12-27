@@ -135,3 +135,7 @@ Create `frontend/.env` with:
 - also use inbuilt cloudinary tumbnail creter to create thumbnail for history
 - how to add the optimize resume to the builder page to get the new resume with optimized content
 - use @dnd-kit/core to add drag and drop feature to the resume builder page
+
+## Credits
+
+This project is a fork of [Resumer](https://github.com/Bhavesh-Solminde/Resumer) created by [Bhavesh-Solminde](https://github.com/Bhavesh-Solminde).
