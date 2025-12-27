@@ -20,7 +20,6 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { motion } from "framer-motion"; // Or "motion/react" if using v12+
-import { cn } from "@/lib/utils";
 import { Toaster } from "react-hot-toast";
 
 // Lazy load builder components
